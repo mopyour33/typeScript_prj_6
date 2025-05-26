@@ -1,3 +1,300 @@
+
+//3-1번 문제
+// 인터페이스 작성
+
+// 타입 작성
+interface User {
+  id:number,
+  name:string
+}
+
+type UserWithEmail ={
+  id:number,
+  name:string,
+  email?:string
+}
+
+
+const user:User = {
+  id: 1,
+  name: "Alice",
+};
+
+const userWithEmail:UserWithEmail = {
+  id: 2,
+  name: "Bob",
+  email: "bob@example.com",
+};
+
+
+//3-2번 문제
+// User 타입을 작성하세요.
+// 여기에 작성
+type User2 = {
+  id:number,
+  name:string,
+  address:
+    {city:string, zipCode:number}
+}
+
+
+// User 타입을 사용하여 아래 객체를 작성하세요.
+const user2:User2 = {
+  id: 1,
+  name: "Alice",
+  address: {
+    city: "Seoul",
+    zipCode: 12345,
+  },
+};
+
+
+console.log(user2);
+
+
+//3-3번 문제
+// User 인터페이스 작성
+// 여기에 작성
+
+interface User3 {
+  id:number,
+  name:string,
+  email?:string
+}
+
+// Admin 인터페이스 작성 (User 확장)
+// 여기에 작성
+
+interface Admin extends User3 {
+  role:string
+}
+
+const normalUser:User3 = {
+  id: 1,
+  name: "Alice",
+  email: "alice@example.com",
+};
+
+const adminUser:Admin = {
+  id: 2,
+  name: "Bob",
+  role: "Administrator",
+};
+
+
+console.log(adminUser);
+
+
+//3-4번 문제
+// Product 타입 작성
+// 여기에 작성
+type Product1 = {
+  id:number,
+  name:string,
+  price:number
+}
+
+// DiscountedProduct 타입 작성 (Product 확장)
+// 여기에 작성
+
+type DiscountedProduct1 = Product1 & {
+  discount:number;
+};
+
+const normalProduct:Product1 = {
+  id: 1,
+  name: "Laptop",
+  price: 1000,
+};
+
+const discountedProduct:DiscountedProduct1 = {
+  id: 2,
+  name: "Smartphone",
+  price: 800,
+  discount: 10,
+};
+
+
+//3-5번 문제
+// Product 타입 작성
+interface Product2 {
+  id:number,
+  name:string,
+  price:number
+}
+
+interface Order1 {
+  orderId:number,
+  products: Product2[],
+  totalPrice:number
+}
+
+
+// Order 타입을 사용하여 아래 객체를 작성하세요.
+const order:Order1 = {
+  orderId: 101,
+  products: [
+    { id: 1, name: "Laptop", price: 1000 },
+    { id: 2, name: "Mouse", price: 50 },
+  ],
+  totalPrice: 1050,
+};
+
+
+//3-6번 문제
+// BaseUser 인터페이스 작성
+interface BaseUser {
+  id:number,
+  name:string
+}
+
+
+type AdminUser = BaseUser & {
+  role:string
+}
+
+type GuestUser = BaseUser & {
+  visitCount:number
+}
+
+// 아래 객체를 작성하세요.
+const admin: AdminUser = {
+  id: 1,
+  name: "Alice",
+  role: "Administrator",
+};
+
+const guest: GuestUser = {
+  id: 2,
+  name: "Bob",
+  visitCount: 5,
+};
+
+
+//4-1번 문제
+// 작업 상태를 나타내는 enum을 작성하세요.
+const enum TaskStatus {
+  Pending = "작업이 대기중입니다",
+  InProgress = "작업이 진행 중입니다",
+  Completed = "작업이 완료되었습니다"
+}
+
+
+function getStatusMessage(status: TaskStatus): string {
+  switch(status){
+    case(TaskStatus.Pending) : return "작업이 대기중입니다"
+    case(TaskStatus.InProgress) : return "작업이 진행 중입니다"
+    case(TaskStatus.Completed) : return "작업이 완료되었습니다"
+    default : return ""
+  }
+}
+
+// 테스트 코드
+console.log(getStatusMessage(TaskStatus.Pending)); // "작업이 대기 중입니다."
+console.log(getStatusMessage(TaskStatus.InProgress)); // "작업이 진행 중입니다."
+console.log(getStatusMessage(TaskStatus.Completed)); // "작업이 완료되었습니다."
+
+
+
+//4-2번 문제
+// 로그 수준을 나타내는 enum 작성
+enum TaskStatus1 {
+  Pending = "작업 대기 중",
+  InProgress = "작업 진행 중",
+  Completed = "작업 완료",
+  Failed = " 작업실패"
+}
+
+function processTask1(status: TaskStatus1, input: unknown): string {
+  if (typeof input !== "string"){
+    throw new Error("입력값은 문자열이어야 합니다.")
+  }
+  switch(status){
+    case TaskStatus1.Pending : return input.toUpperCase();
+    case TaskStatus1.InProgress : return input.toLowerCase();
+    case TaskStatus1.Completed : return `완료:${input}`;
+    case TaskStatus1.Failed: throw new Error("작업이 실패했습니다");
+    default : throw new Error("알수없음");
+
+  }
+}
+
+// 테스트 코드
+console.log(processTask1(TaskStatus1.Pending, "task1")); 
+// 기대 출력: "TASK1"
+
+console.log(processTask1(TaskStatus1.InProgress, "TaskA")); 
+// 기대 출력: "taska"
+
+console.log(processTask1(TaskStatus1.Completed, "Report1")); 
+// 기대 출력: "완료: Report1"
+
+// console.log(processTask1(TaskStatus1.Failed, "TaskX")); 
+// // 에러: 작업이 실패했습니다.
+
+// console.log(processTask1(TaskStatus1.Pending, 42)); 
+// // 에러: 입력값은 문자열이어야 합니다.
+
+
+
+//4-3번 문제
+// 로그 수준을 나타내는 enum 작성
+enum LogM {
+  Info="Info",
+  Error="Error",
+  Debug="Debug",
+};
+
+// 로그 함수 타입을 정의하세요.
+type FnLogM = (message:string, level:LogM) => void;
+
+// 로그 함수 구현
+const logMessage:FnLogM = (message:string, level:LogM) => {
+  switch(level){
+    case LogM.Info: console.log(`[info] ${message}`); break;
+    case LogM.Error: console.log(`[Error] ${message}`); break;
+    case LogM.Debug: console.log(`[Debus] ${message}`); break;
+    default : console.log("값이 없습니다");
+  }
+};
+
+
+// 테스트 코드
+logMessage("시스템이 시작되었습니다.", LogM.Info);
+logMessage("네트워크 연결 실패!", LogM.Error);
+logMessage("디버깅 모드 활성화", LogM.Debug);
+
+
+
+//4-4번 문제
+function processAny(input: any): string {
+  return input.toString();
+}
+
+function processUnknown(input: unknown): string | number {
+  if (typeof input ==="string"){
+    return input.toUpperCase();
+  }  else if(typeof input === "number"){
+    return 10*input;
+  }else {
+    throw new Error("적정타입 없음");
+  }
+}
+
+// 테스트 코드
+console.log(processAny("hello")); // 기대 출력: "hello"
+console.log(processAny(42)); // 기대 출력: "42"
+console.log(processAny(true)); // 기대 출력: "true"
+
+console.log(processUnknown("hello")); // 기대 출력: "HELLO"
+console.log(processUnknown(42)); // 기대 출력: 420
+// console.log(processUnknown(true)); // 에러 발생
+
+
+
+//------------------------------------------------------
+
+
 // 1-1번 문제
 let userName:string; // 예: 이름
 let userAge:number; // 예: 나이
@@ -86,16 +383,16 @@ console.log(isPrimitive([])); // false
 
 //2-1번 문제
 
-let user: { name: string; age?: number; isAdmin: boolean }  = {
-  name: "Alice",
-  isAdmin: true,
-};
+// let user: { name: string; age?: number; isAdmin: boolean }  = {
+//   name: "Alice",
+//   isAdmin: true,
+// };
 
-user={
-  name: "Bob",
-  age:40,
-  isAdmin: false,
-}
+// user={
+//   name: "Bob",
+//   age:40,
+//   isAdmin: false,
+// }
 
 
 //2-2번 문제
@@ -222,7 +519,61 @@ console.log(getProductsByCategory("Books")); // []
     
 // }
 
-//1. typeof -> 원시타입만 typeof가 잡아냄냄
+//제네릭 타입 <T> => Type을 호출할때 Type이 결정됨.
+type ArrayType<T> = T[]
+
+const numberArray:ArrayType<number> = [1,2,3]
+const StringArray:ArrayType<String> = ["a","b","c"]
+
+//
+// type CategoryResponse = {
+//   status: string,
+//   totalPage:number,
+//   totalResult:number,
+//   page:number,
+//   data:{name:string}[]
+// }
+
+// type MovieResponse = {
+//   status:string,
+//   totalPage:number,
+//   totalResult:number,
+//   page:number,
+//   data:{title:string,genre:string}[]
+// }
+
+type ApiResponse<T> = {
+  staus:string,
+  totalPage:number,
+  totalResult:number,
+  page:number,
+  data:T[]
+}
+
+type CategoryResponse =ApiResponse<{name:string}>
+type MovieResponse=ApiResponse<{title:string, genre:string}>
+
+//function useState<T>(초기화값:T):[T,함수<T>]{
+//   return [값, 함수]
+// }
+
+//useState를 쓸때는 <T> 제너릭을 선언하면서 만들자 -> <T>는 값이 들어오면서 정해짐
+// const [value, setValue] = useState(true)
+// const [value2, setValue2] = useState<boolean>(false)
+
+interface Length{
+  length:number
+}
+
+function getValue<T extends Length>(data:T){
+  console.log(data.length)
+}
+
+console.log(getValue("hello"));
+console.log(getValue([1,2,3]))
+
+
+//1. typeof -> 원시타입만 typeof가 잡아냄
 type SearchType= number | string;
 
 function searchBykeyword(keyword:SearchType):string{
