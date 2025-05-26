@@ -113,7 +113,6 @@ function getAvailableProducts(products) {
         return isStock === true;
     });
 }
-// 여기에 구현
 // 테스트 코드
 console.log(getProductNamesAndPrices(products));
 // 기대 출력: [["Laptop", 1000], ["Shoes", 50], ["Book", 20]]
@@ -133,7 +132,7 @@ function updateUser(user) {
 console.log(updateUser({ name: "Charlie" })); // { name: "Charlie", age: 18 }
 console.log(updateUser({ name: "Dana", age: 25 })); // { name: "Dana", age: 25 }
 //2-5번 문제
-// proudcts 타입정의  필요 
+// products 타입정의  필요 
 var productss = [
     { name: "Laptop", price: 1000, category: "Electronics" },
     { name: "Shoes", price: 50, category: "Fashion" },

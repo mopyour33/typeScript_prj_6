@@ -129,7 +129,7 @@ function getAvailableProducts(
   return products.filter(([name, price, isStock ]) => isStock === true )
 
 }
-// 여기에 구현
+
 
 // 테스트 코드
 console.log(getProductNamesAndPrices(products));
@@ -156,7 +156,7 @@ console.log(updateUser({ name: "Dana", age: 25 })); // { name: "Dana", age: 25 }
 
 
 //2-5번 문제
-// proudcts 타입정의  필요 
+// products 타입정의  필요 
 const productss = [
   { name: "Laptop", price: 1000, category: "Electronics" },
   { name: "Shoes", price: 50, category: "Fashion" },
