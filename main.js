@@ -165,7 +165,8 @@ console.log(processAny(42)); // 기대 출력: "42"
 console.log(processAny(true)); // 기대 출력: "true"
 console.log(processUnknown("hello")); // 기대 출력: "HELLO"
 console.log(processUnknown(42)); // 기대 출력: 420
-console.log(processUnknown(true)); // 에러 발생
+// console.log(processUnknown(true)); // 에러 발생
+//------------------------------------------------------
 // 1-1번 문제
 var userName; // 예: 이름
 var userAge; // 예: 나이
@@ -218,13 +219,6 @@ console.log(compareValues(42, 42)); // 엄격한 동등성
 //1-6번 문제
 function isPrimitive(value) {
     return value === null || (value !== Object(value));
-    switch (typeof value) {
-        case ("string"): return true;
-        case ("number"): return true;
-        case ("boolean"): return true;
-        case ("undefined"): return true;
-        default: return false;
-    }
 }
 // 함수 호출 예시
 console.log(isPrimitive("Hello")); // true
@@ -280,9 +274,6 @@ console.log(getAvailableProducts(products));
 function updateUser(user) {
     var _a;
     // 나이가 제공되지 않으면 18로 설정
-    if (user.age === null || user.age === undefined) {
-        user.age = 18;
-    }
     return __assign(__assign({}, user), { age: (_a = user.age) !== null && _a !== void 0 ? _a : 18 });
 }
 // 테스트 코드
@@ -310,11 +301,7 @@ console.log(getProductsByCategory("Fashion")); // ["Shoes"]
 console.log(getProductsByCategory("Books")); // []
 var numberArray = [1, 2, 3];
 var StringArray = ["a", "b", "c"];
-function getValue(data) {
-    console.log(data.length);
-}
-console.log(getValue("hello"));
-console.log(getValue([1, 2, 3]));
+var movie1 = { title: "기생충", genre: "액션" };
 function searchBykeyword(keyword) {
     // number로 들어오는 타입은 string으로 바꿔주기
     if (typeof keyword === "number")
