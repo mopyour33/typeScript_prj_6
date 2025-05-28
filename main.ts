@@ -242,7 +242,7 @@ console.log(calculateArea1({ type:"circle",  radius: 7 })); // 기대 출력: 15
 
 
 
-
+//------------------------------------------------------------------------
 
 
 
@@ -423,9 +423,9 @@ const guest: GuestUser = {
 //4-1번 문제
 // 작업 상태를 나타내는 enum을 작성하세요.
 const enum TaskStatus {
-  Pending = "작업이 대기중입니다",
-  InProgress = "작업이 진행 중입니다",
-  Completed = "작업이 완료되었습니다"
+  Pending = "Pending",
+  InProgress = "InProgress",
+  Completed = "Completed"
 }
 
 
@@ -448,10 +448,10 @@ console.log(getStatusMessage(TaskStatus.Completed)); // "작업이 완료되었�
 //4-2번 문제
 // 로그 수준을 나타내는 enum 작성
 enum TaskStatus1 {
-  Pending = "작업 대기 중",
-  InProgress = "작업 진행 중",
-  Completed = "작업 완료",
-  Failed = " 작업실패"
+  Pending = "Pending",
+  InProgress = "InProgress",
+  Completed = "Completed",
+  Failed = "Failed"
 }
 
 function processTask1(status: TaskStatus1, input: unknown): string {
