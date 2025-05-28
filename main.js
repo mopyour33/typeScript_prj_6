@@ -1,3 +1,5 @@
+//3-1번 문제
+// 인터페이스 작성
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -9,6 +11,160 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+var user = {
+    id: 1,
+    name: "Alice",
+};
+var userWithEmail = {
+    id: 2,
+    name: "Bob",
+    email: "bob@example.com",
+};
+// User 타입을 사용하여 아래 객체를 작성하세요.
+var user2 = {
+    id: 1,
+    name: "Alice",
+    address: {
+        city: "Seoul",
+        zipCode: 12345,
+    },
+};
+console.log(user2);
+var normalUser = {
+    id: 1,
+    name: "Alice",
+    email: "alice@example.com",
+};
+var adminUser = {
+    id: 2,
+    name: "Bob",
+    role: "Administrator",
+};
+console.log(adminUser);
+var normalProduct = {
+    id: 1,
+    name: "Laptop",
+    price: 1000,
+};
+var discountedProduct = {
+    id: 2,
+    name: "Smartphone",
+    price: 800,
+    discount: 10,
+};
+// Order 타입을 사용하여 아래 객체를 작성하세요.
+var order = {
+    orderId: 101,
+    products: [
+        { id: 1, name: "Laptop", price: 1000 },
+        { id: 2, name: "Mouse", price: 50 },
+    ],
+    totalPrice: 1050,
+};
+// 아래 객체를 작성하세요.
+var admin = {
+    id: 1,
+    name: "Alice",
+    role: "Administrator",
+};
+var guest = {
+    id: 2,
+    name: "Bob",
+    visitCount: 5,
+};
+function getStatusMessage(status) {
+    switch (status) {
+        case ("Pending" /* TaskStatus.Pending */): return "작업이 대기중입니다";
+        case ("InProgress" /* TaskStatus.InProgress */): return "작업이 진행 중입니다";
+        case ("Completed" /* TaskStatus.Completed */): return "작업이 완료되었습니다";
+        default: return "";
+    }
+}
+// 테스트 코드
+console.log(getStatusMessage("Pending" /* TaskStatus.Pending */)); // "작업이 대기 중입니다."
+console.log(getStatusMessage("InProgress" /* TaskStatus.InProgress */)); // "작업이 진행 중입니다."
+console.log(getStatusMessage("Completed" /* TaskStatus.Completed */)); // "작업이 완료되었습니다."
+//4-2번 문제
+// 로그 수준을 나타내는 enum 작성
+var TaskStatus1;
+(function (TaskStatus1) {
+    TaskStatus1["Pending"] = "Pending";
+    TaskStatus1["InProgress"] = "InProgress";
+    TaskStatus1["Completed"] = "Completed";
+    TaskStatus1["Failed"] = "Failed";
+})(TaskStatus1 || (TaskStatus1 = {}));
+function processTask1(status, input) {
+    if (typeof input !== "string") {
+        throw new Error("입력값은 문자열이어야 합니다.");
+    }
+    switch (status) {
+        case TaskStatus1.Pending: return input.toUpperCase();
+        case TaskStatus1.InProgress: return input.toLowerCase();
+        case TaskStatus1.Completed: return "\uC644\uB8CC:".concat(input);
+        case TaskStatus1.Failed: throw new Error("작업이 실패했습니다");
+        default: throw new Error("알수없음");
+    }
+}
+// 테스트 코드
+console.log(processTask1(TaskStatus1.Pending, "task1"));
+// 기대 출력: "TASK1"
+console.log(processTask1(TaskStatus1.InProgress, "TaskA"));
+// 기대 출력: "taska"
+console.log(processTask1(TaskStatus1.Completed, "Report1"));
+// 기대 출력: "완료: Report1"
+// console.log(processTask1(TaskStatus1.Failed, "TaskX")); 
+// // 에러: 작업이 실패했습니다.
+// console.log(processTask1(TaskStatus1.Pending, 42)); 
+// // 에러: 입력값은 문자열이어야 합니다.
+//4-3번 문제
+// 로그 수준을 나타내는 enum 작성
+var LogM;
+(function (LogM) {
+    LogM["Info"] = "Info";
+    LogM["Error"] = "Error";
+    LogM["Debug"] = "Debug";
+})(LogM || (LogM = {}));
+;
+// 로그 함수 구현
+var logMessage = function (message, level) {
+    switch (level) {
+        case LogM.Info:
+            console.log("[info] ".concat(message));
+            break;
+        case LogM.Error:
+            console.log("[Error] ".concat(message));
+            break;
+        case LogM.Debug:
+            console.log("[Debus] ".concat(message));
+            break;
+        default: console.log("값이 없습니다");
+    }
+};
+// 테스트 코드
+logMessage("시스템이 시작되었습니다.", LogM.Info);
+logMessage("네트워크 연결 실패!", LogM.Error);
+logMessage("디버깅 모드 활성화", LogM.Debug);
+//4-4번 문제
+function processAny(input) {
+    return input.toString();
+}
+function processUnknown(input) {
+    if (typeof input === "string") {
+        return input.toUpperCase();
+    }
+    else if (typeof input === "number") {
+        return 10 * input;
+    }
+    else {
+        throw new Error("적정타입 없음");
+    }
+}
+// 테스트 코드
+console.log(processAny("hello")); // 기대 출력: "hello"
+console.log(processAny(42)); // 기대 출력: "42"
+console.log(processAny(true)); // 기대 출력: "true"
+console.log(processUnknown("hello")); // 기대 출력: "HELLO"
+console.log(processUnknown(42)); // 기대 출력: 420
 function calculateDiscountedPrice(item) {
     return item.price * (1 - item.discountPercentage / 100);
 }
@@ -149,161 +305,7 @@ function calculateArea1(shape) {
 // 테스트 코드
 console.log(calculateArea1({ type: "square", side: 5 })); // 기대 출력: 25
 console.log(calculateArea1({ type: "circle", radius: 7 })); // 기대 출력: 153.93804002589985
-var user = {
-    id: 1,
-    name: "Alice",
-};
-var userWithEmail = {
-    id: 2,
-    name: "Bob",
-    email: "bob@example.com",
-};
-// User 타입을 사용하여 아래 객체를 작성하세요.
-var user2 = {
-    id: 1,
-    name: "Alice",
-    address: {
-        city: "Seoul",
-        zipCode: 12345,
-    },
-};
-console.log(user2);
-var normalUser = {
-    id: 1,
-    name: "Alice",
-    email: "alice@example.com",
-};
-var adminUser = {
-    id: 2,
-    name: "Bob",
-    role: "Administrator",
-};
-console.log(adminUser);
-var normalProduct = {
-    id: 1,
-    name: "Laptop",
-    price: 1000,
-};
-var discountedProduct = {
-    id: 2,
-    name: "Smartphone",
-    price: 800,
-    discount: 10,
-};
-// Order 타입을 사용하여 아래 객체를 작성하세요.
-var order = {
-    orderId: 101,
-    products: [
-        { id: 1, name: "Laptop", price: 1000 },
-        { id: 2, name: "Mouse", price: 50 },
-    ],
-    totalPrice: 1050,
-};
-// 아래 객체를 작성하세요.
-var admin = {
-    id: 1,
-    name: "Alice",
-    role: "Administrator",
-};
-var guest = {
-    id: 2,
-    name: "Bob",
-    visitCount: 5,
-};
-function getStatusMessage(status) {
-    switch (status) {
-        case ("\uC791\uC5C5\uC774 \uB300\uAE30\uC911\uC785\uB2C8\uB2E4" /* TaskStatus.Pending */): return "작업이 대기중입니다";
-        case ("\uC791\uC5C5\uC774 \uC9C4\uD589 \uC911\uC785\uB2C8\uB2E4" /* TaskStatus.InProgress */): return "작업이 진행 중입니다";
-        case ("\uC791\uC5C5\uC774 \uC644\uB8CC\uB418\uC5C8\uC2B5\uB2C8\uB2E4" /* TaskStatus.Completed */): return "작업이 완료되었습니다";
-        default: return "";
-    }
-}
-// 테스트 코드
-console.log(getStatusMessage("\uC791\uC5C5\uC774 \uB300\uAE30\uC911\uC785\uB2C8\uB2E4" /* TaskStatus.Pending */)); // "작업이 대기 중입니다."
-console.log(getStatusMessage("\uC791\uC5C5\uC774 \uC9C4\uD589 \uC911\uC785\uB2C8\uB2E4" /* TaskStatus.InProgress */)); // "작업이 진행 중입니다."
-console.log(getStatusMessage("\uC791\uC5C5\uC774 \uC644\uB8CC\uB418\uC5C8\uC2B5\uB2C8\uB2E4" /* TaskStatus.Completed */)); // "작업이 완료되었습니다."
-//4-2번 문제
-// 로그 수준을 나타내는 enum 작성
-var TaskStatus1;
-(function (TaskStatus1) {
-    TaskStatus1["Pending"] = "\uC791\uC5C5 \uB300\uAE30 \uC911";
-    TaskStatus1["InProgress"] = "\uC791\uC5C5 \uC9C4\uD589 \uC911";
-    TaskStatus1["Completed"] = "\uC791\uC5C5 \uC644\uB8CC";
-    TaskStatus1["Failed"] = " \uC791\uC5C5\uC2E4\uD328";
-})(TaskStatus1 || (TaskStatus1 = {}));
-function processTask1(status, input) {
-    if (typeof input !== "string") {
-        throw new Error("입력값은 문자열이어야 합니다.");
-    }
-    switch (status) {
-        case TaskStatus1.Pending: return input.toUpperCase();
-        case TaskStatus1.InProgress: return input.toLowerCase();
-        case TaskStatus1.Completed: return "\uC644\uB8CC:".concat(input);
-        case TaskStatus1.Failed: throw new Error("작업이 실패했습니다");
-        default: throw new Error("알수없음");
-    }
-}
-// 테스트 코드
-console.log(processTask1(TaskStatus1.Pending, "task1"));
-// 기대 출력: "TASK1"
-console.log(processTask1(TaskStatus1.InProgress, "TaskA"));
-// 기대 출력: "taska"
-console.log(processTask1(TaskStatus1.Completed, "Report1"));
-// 기대 출력: "완료: Report1"
-// console.log(processTask1(TaskStatus1.Failed, "TaskX")); 
-// // 에러: 작업이 실패했습니다.
-// console.log(processTask1(TaskStatus1.Pending, 42)); 
-// // 에러: 입력값은 문자열이어야 합니다.
-//4-3번 문제
-// 로그 수준을 나타내는 enum 작성
-var LogM;
-(function (LogM) {
-    LogM["Info"] = "Info";
-    LogM["Error"] = "Error";
-    LogM["Debug"] = "Debug";
-})(LogM || (LogM = {}));
-;
-// 로그 함수 구현
-var logMessage = function (message, level) {
-    switch (level) {
-        case LogM.Info:
-            console.log("[info] ".concat(message));
-            break;
-        case LogM.Error:
-            console.log("[Error] ".concat(message));
-            break;
-        case LogM.Debug:
-            console.log("[Debus] ".concat(message));
-            break;
-        default: console.log("값이 없습니다");
-    }
-};
-// 테스트 코드
-logMessage("시스템이 시작되었습니다.", LogM.Info);
-logMessage("네트워크 연결 실패!", LogM.Error);
-logMessage("디버깅 모드 활성화", LogM.Debug);
-//4-4번 문제
-function processAny(input) {
-    return input.toString();
-}
-function processUnknown(input) {
-    if (typeof input === "string") {
-        return input.toUpperCase();
-    }
-    else if (typeof input === "number") {
-        return 10 * input;
-    }
-    else {
-        throw new Error("적정타입 없음");
-    }
-}
-// 테스트 코드
-console.log(processAny("hello")); // 기대 출력: "hello"
-console.log(processAny(42)); // 기대 출력: "42"
-console.log(processAny(true)); // 기대 출력: "true"
-console.log(processUnknown("hello")); // 기대 출력: "HELLO"
-console.log(processUnknown(42)); // 기대 출력: 420
-// console.log(processUnknown(true)); // 에러 발생
+//------------------------------------------------------------------------
 //------------------------------------------------------
 // 1-1번 문제
 var userName; // 예: 이름
