@@ -1,3 +1,345 @@
+//----------------------------------
+
+// 6-1번 문제
+type Product6 = {
+  id: number,
+  name: string,
+  price: number
+};
+
+
+type Discount = {
+  discountPercentage: number
+};
+
+type DiscountedProduct6 = Product6 & Discount;
+
+
+function calculateDiscountedPrice(item: DiscountedProduct6): number {
+  return item.price * (1 - item.discountPercentage / 100);
+}
+
+// 테스트 코드
+const discountedProduct6: DiscountedProduct6 = {
+  id: 101,
+  name: "Laptop",
+  price: 1000,
+  discountPercentage: 20,
+};
+
+console.log(calculateDiscountedPrice(discountedProduct6)); // 800
+
+
+
+
+// 6-2번 문제
+// ContactInfo 타입 정의
+type ContactInfo = {
+  phone: string,
+  address: string
+}
+
+// OrderInfo 타입 정의
+type OrderInfo = {
+  orderId: number,
+  items: string[]
+}
+
+
+function printOrderSummary(order: ContactInfo & OrderInfo): string {
+  return `(order: ${order.orderId}) (Phone: ${order.phone})`
+}
+
+// 테스트 코드
+const orderDetails = {
+  phone: "123-456-7890",
+  address: "123 Main St",
+  orderId: 2023,
+  items: ["Laptop", "Mouse"]
+};
+
+console.log(printOrderSummary(orderDetails)); // "Order 2023 (Phone: 123-456-7890)"
+
+
+// 6-3번 문제
+// 기본 사용자 정보 타입 정의
+type Profile = {
+  id: number,
+  name: string,
+  email: string
+}
+
+// 사용자 활동 기록 타입 정의
+type Activity = {
+  lastLogin: Date,
+  actions: string[]
+}
+
+
+// 사용자 데이터를 병합하는 함수
+function mergeUserData(
+  profile: Profile,
+  activity: Activity
+): Profile & Activity {
+  return { ...profile, ...activity };
+}
+
+// 사용자 요약 정보를 반환하는 함수
+function getUserSummary(user: Profile & Activity): string {
+  return `사용자 [${user.id}] - [${user.name}]([${user.email}]) - 마지막 로그인: [${user.lastLogin.toISOString()}]`;
+}
+
+
+
+// 테스트 코드
+const profile = { id: 1, name: "Alice", email: "alice@example.com" };
+const activity = {
+  lastLogin: new Date("2024-01-01T10:00:00Z"),
+  actions: ["login", "viewed dashboard", "logout"],
+};
+
+const mergedUser = mergeUserData(profile, activity);
+console.log(getUserSummary(mergedUser));
+// 출력 예시: "사용자 1 - Alice (alice@example.com) - 마지막 로그인: 2024-01-01T10:00:00Z"
+
+
+
+// 9-1번 문제
+// 매개변수, 리턴타입 정의필요 
+function processInput(input: number[] | string[] | { message: string }): string | number {
+  if (Array.isArray(input)) {
+    if (typeof input[0] === "number") {
+      return (input as number[]).reduce((result9:number, input_num) => result9 + input_num, 0);
+    }
+    else if (typeof input[0] === "string") {
+      return (input as string[]).join('');
+    } else {
+      throw new Error("에러 발생");
+    }
+  }
+  else if ("message" in input) {
+      return (input as {message:string}).message.toUpperCase();
+  }    
+  else { throw new Error("에러 발생");}
+}
+
+// 테스트 코드
+console.log(processInput([1, 2, 3])); // 6
+console.log(processInput(["hello", "world"])); // "helloworld"
+console.log(processInput({ message: "TypeScript" })); // "TYPESCRIPT"
+// console.log(processInput(42)); // 에러 발생
+
+
+
+// 9-2번 문제
+// 클래스 정의
+class Car {
+  public brand:string;
+  constructor(brand:string){
+    this.brand=brand;
+  }
+}
+
+class Bike {
+  public type:string;
+  constructor(type:string){
+    this.type=type;
+  }
+}
+
+function processVehicle(vehicle: Car | Bike): string {
+  if (vehicle instanceof Car){
+    return vehicle.brand.toUpperCase();
+  }
+  else if (vehicle instanceof Bike){
+    return `Bike: ${vehicle.type}`;
+  }
+  else throw new Error("에러 발생");
+}
+
+// 테스트 코드
+const myCar = new Car("Tesla");
+const myBike = new Bike("Mountain");
+
+console.log(processVehicle(myCar)); // "TESLA"
+console.log(processVehicle(myBike)); // "Bike: Mountain"
+// console.log(processVehicle("unknown")); // 에러 발생
+
+
+
+//9-3번 문제
+type Admin1 = { type: "admin"; permissions: string[] };
+type User1 = { type: "user"; email: string };
+
+function processUser(user: Admin1 | User1): string {
+  if ("permissions" in user) {
+    return user.permissions.join(",");
+  } else if ("email" in user) {
+    return user.email;
+  } else {
+    return "에러 입니다.";
+  }
+
+}
+
+// 테스트 코드
+console.log(processUser({ type: "admin", permissions: ["read", "write"] })); // "read,write"
+console.log(processUser({ type: "user", email: "user@example.com" })); // "user@example.com"
+
+
+
+// 9-4번 문제
+type Rectangle = { width: number; height: number };
+type Circle = { radius: number };
+
+// 사용자 정의 타입 가드
+function isRectangle(shape: unknown): shape is Rectangle {
+  return (shape as Rectangle).width !== undefined && (shape as Rectangle).height !==undefined;
+}
+
+function calculateArea(shape: Rectangle | Circle): number {
+  if (isRectangle(shape)){
+    return shape.width * shape.height;
+  }else {
+    return shape.radius**2*Math.PI;
+  } 
+}
+
+// 테스트 코드
+console.log(calculateArea({ width: 10, height: 5 })); // 50
+console.log(calculateArea({ radius: 7 })); // 153.93804002589985 (대략 π * 7²)
+
+
+// 9-5번 문제
+type Square = {
+  type:"square";
+  side: number;
+}
+
+type Circle1 = {
+  type:"circle";
+  radius: number;
+}
+
+type Shape = Square | Circle1
+
+// 넓이를 계산하는 함수
+function calculateArea1(shape: Shape): number {
+  switch(shape.type){
+    case ("square") : return shape.side**2
+    case ("circle") : return shape.radius**2*Math.PI;
+    default : const exhaustive_check : never = shape;
+    throw new Error("해당 타입이 없습니다.")
+  }
+
+  // 여기에 구현
+}
+
+// 테스트 코드
+console.log(calculateArea1({ type:"square", side: 5 })); // 기대 출력: 25
+console.log(calculateArea1({ type:"circle",  radius: 7 })); // 기대 출력: 153.93804002589985
+
+//----------------------------------------------
+
+
+//11-1번 문제
+// 매개변수, 리턴타입 정의 필요 
+function getFirstElement<T>(array: T[]): T | undefined {
+  return array[0];
+}
+
+// 테스트 코드
+console.log(getFirstElement([1, 2, 3])); // 1
+console.log(getFirstElement(["a", "b", "c"])); // "a"
+console.log(getFirstElement([])); // undefined
+
+
+//11-2번 문제
+// 매개변수, 리턴타입 정의 필요 
+function isNumberArray<T>(array: T[]):boolean {
+  return array.every((item)=> typeof item ==="number");
+  
+}
+
+// 테스트 코드
+console.log(isNumberArray([1, 2, 3])); // true
+console.log(isNumberArray(["a", "b", "c"])); // false
+console.log(isNumberArray([])); // true (빈 배열은 숫자 배열로 간주)
+
+
+// 11-3번 문제
+// 조건부 타입 정의
+type IsArray<T> = T extends Array<any> ? true: false;
+
+// 조건부 타입을 활용한 함수
+function checkArrayType<T>(value: T): string {
+  if (Array.isArray(value)){
+    return "This is an Array";
+  }else {
+    return "This is not an Array";
+  }
+}
+
+// 테스트 코드
+console.log(checkArrayType([1, 2, 3])); // "This is an array."
+console.log(checkArrayType("Hello")); // "This is not an array."
+console.log(checkArrayType({ key: "value" })); // "This is not an array."
+
+
+
+//11-4번 문제
+// Mapped Type 정의
+type WithDefault<T> = {
+  [K in keyof T] ?: [T[K], T[K]]
+};
+
+// 테스트 코드
+type Original = { id: number; name: string; isActive: boolean };
+type WithDefaults = WithDefault<Original>;
+
+// 기대 결과:
+// type WithDefaults = {
+//   id: [number, number];
+//   name: [string, string];
+//   isActive: [boolean, boolean];
+// }
+
+
+//11-5번 문제
+function createObject<K extends string | number | symbol, V>(key: K, value: V): Record<K, V> {
+  return { [key]: value } as Record<K, V>;
+}
+
+console.log(createObject("id", 123)); // { id: 123 }
+console.log(createObject("name", "Alice")); // { name: "Alice" }
+
+
+// 11-6번 문제
+// 매개변수, 리턴 타입 정의 필요 
+function pluck<T>(array: Object[], key:string): T[] {
+  if ( array.every(item => key in item)){
+    return array.map(item => item[key]);
+  }
+  else return [];
+}
+
+// 테스트 코드
+const users = [
+  { id: 1, name: "Alice" },
+  { id: 2, name: "Bob" },
+];
+
+console.log(pluck(users, "id")); // [1, 2]
+console.log(pluck(users, "name")); // ["Alice", "Bob"]
+
+
+
+
+
+
+//-------------------------------------------------------
+
+
 //3-1번 문제
 // 인터페이스 작성
 
@@ -288,261 +630,6 @@ console.log(processAny(true)); // 기대 출력: "true"
 console.log(processUnknown("hello")); // 기대 출력: "HELLO"
 console.log(processUnknown(42)); // 기대 출력: 420
 // console.log(processUnknown(true)); // 에러 발생
-
-
-//-----------------------------------
-
-
-// 6-1번 문제
-type Product6 = {
-  id: number,
-  name: string,
-  price: number
-};
-
-
-type Discount = {
-  discountPercentage: number
-};
-
-type DiscountedProduct6 = Product6 & Discount;
-
-
-function calculateDiscountedPrice(item: DiscountedProduct6): number {
-  return item.price * (1 - item.discountPercentage / 100);
-}
-
-// 테스트 코드
-const discountedProduct6: DiscountedProduct6 = {
-  id: 101,
-  name: "Laptop",
-  price: 1000,
-  discountPercentage: 20,
-};
-
-console.log(calculateDiscountedPrice(discountedProduct6)); // 800
-
-
-
-
-// 6-2번 문제
-// ContactInfo 타입 정의
-type ContactInfo = {
-  phone: string,
-  address: string
-}
-
-// OrderInfo 타입 정의
-type OrderInfo = {
-  orderId: number,
-  items: string[]
-}
-
-
-function printOrderSummary(order: ContactInfo & OrderInfo): string {
-  return `(order: ${order.orderId}) (Phone: ${order.phone})`
-}
-
-// 테스트 코드
-const orderDetails = {
-  phone: "123-456-7890",
-  address: "123 Main St",
-  orderId: 2023,
-  items: ["Laptop", "Mouse"]
-};
-
-console.log(printOrderSummary(orderDetails)); // "Order 2023 (Phone: 123-456-7890)"
-
-
-// 6-3번 문제
-// 기본 사용자 정보 타입 정의
-type Profile = {
-  id: number,
-  name: string,
-  email: string
-}
-
-// 사용자 활동 기록 타입 정의
-type Activity = {
-  lastLogin: Date,
-  actions: string[]
-}
-
-
-// 사용자 데이터를 병합하는 함수
-function mergeUserData(
-  profile: Profile,
-  activity: Activity
-): Profile & Activity {
-  return { ...profile, ...activity };
-}
-
-// 사용자 요약 정보를 반환하는 함수
-function getUserSummary(user: Profile & Activity): string {
-  return `사용자 [${user.id}] - [${user.name}]([${user.email}]) - 마지막 로그인: [${user.lastLogin}]`;
-}
-
-
-
-// 테스트 코드
-const profile = { id: 1, name: "Alice", email: "alice@example.com" };
-const activity = {
-  lastLogin: new Date("2024-01-01T10:00:00Z"),
-  actions: ["login", "viewed dashboard", "logout"],
-};
-
-const mergedUser = mergeUserData(profile, activity);
-console.log(getUserSummary(mergedUser));
-// 출력 예시: "사용자 1 - Alice (alice@example.com) - 마지막 로그인: 2024-01-01T10:00:00Z"
-
-
-
-// 9-1번 문제
-// 매개변수, 리턴타입 정의필요 
-function processInput(input: number[] | string[] | { message: string }): string | number {
-  if (Array.isArray(input)) {
-    if (typeof input[0] === "number") {
-      return (input as number[]).reduce((result9:number, input_num) => result9 + input_num, 0);
-    }
-    else if (typeof input[0] === "string") {
-      return (input as string[]).join('');
-    } else {
-      throw new Error("에러 발생");
-    }
-  }
-  else if ("message" in input) {
-      return (input as {message:string}).message.toUpperCase();
-  }    
-  else { throw new Error("에러 발생");}
-}
-
-// 테스트 코드
-console.log(processInput([1, 2, 3])); // 6
-console.log(processInput(["hello", "world"])); // "helloworld"
-console.log(processInput({ message: "TypeScript" })); // "TYPESCRIPT"
-// console.log(processInput(42)); // 에러 발생
-
-
-
-// 9-2번 문제
-// 클래스 정의
-class Car {
-  public brand:string;
-  constructor(brand:string){
-    this.brand=brand;
-  }
-}
-
-class Bike {
-  public type:string;
-  constructor(type:string){
-    this.type=type;
-  }
-}
-
-function processVehicle(vehicle: Car | Bike): string {
-  if (vehicle instanceof Car){
-    return vehicle.brand.toUpperCase();
-  }
-  else if (vehicle instanceof Bike){
-    return `Bike: ${vehicle.type}`;
-  }
-  else throw new Error("에러 발생");
-}
-
-// 테스트 코드
-const myCar = new Car("Tesla");
-const myBike = new Bike("Mountain");
-
-console.log(processVehicle(myCar)); // "TESLA"
-console.log(processVehicle(myBike)); // "Bike: Mountain"
-// console.log(processVehicle("unknown")); // 에러 발생
-
-
-
-//9-3번 문제
-type Admin1 = { type: "admin"; permissions: string[] };
-type User1 = { type: "user"; email: string };
-
-function processUser(user: Admin1 | User1): string {
-  if ("permissions" in user) {
-    return user.permissions.join(",");
-  } else if ("email" in user) {
-    return user.email;
-  } else {
-    return "undefined";
-  }
-
-}
-
-// 테스트 코드
-console.log(processUser({ type: "admin", permissions: ["read", "write"] })); // "read,write"
-console.log(processUser({ type: "user", email: "user@example.com" })); // "user@example.com"
-
-
-
-// 9-4번 문제
-type Rectangle = { width: number; height: number };
-type Circle = { radius: number };
-
-// 사용자 정의 타입 가드
-function isRectangle(shape: unknown): shape is Rectangle {
-  return (shape as Rectangle).width !== undefined && (shape as Rectangle).height !==undefined;
-}
-
-function calculateArea(shape: Rectangle | Circle): number {
-  if (isRectangle(shape)){
-    return shape.width * shape.height;
-  }else if (shape as Circle){
-    return shape.radius**2*Math.PI;
-  } else {
-     return 0;
-  }
-}
-
-// 테스트 코드
-console.log(calculateArea({ width: 10, height: 5 })); // 50
-console.log(calculateArea({ radius: 7 })); // 153.93804002589985 (대략 π * 7²)
-
-
-// 9-5번 문제
-type Square = {
-  type:"square";
-  side: number;
-}
-
-type Circle1 = {
-  type:"circle";
-  radius: number;
-}
-
-type Shape = Square | Circle1
-
-// 넓이를 계산하는 함수
-function calculateArea1(shape: Shape): number {
-  switch(shape.type){
-    case ("square") : return shape.side**2
-    case ("circle") : return shape.radius**2*Math.PI;
-    default : const exhaustive_check : never = shape;
-    throw new Error("해당 타입이 없습니다.")
-  }
-
-  // 여기에 구현
-}
-
-// 테스트 코드
-console.log(calculateArea1({ type:"square", side: 5 })); // 기대 출력: 25
-console.log(calculateArea1({ type:"circle",  radius: 7 })); // 기대 출력: 153.93804002589985
-
-
-
-//------------------------------------------------------------------------
-
-
-
-
-
-
 
 
 

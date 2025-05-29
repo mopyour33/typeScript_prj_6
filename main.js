@@ -1,5 +1,4 @@
-//3-1번 문제
-// 인터페이스 작성
+//----------------------------------
 var __assign = (this && this.__assign) || function () {
     __assign = Object.assign || function(t) {
         for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -11,6 +10,204 @@ var __assign = (this && this.__assign) || function () {
     };
     return __assign.apply(this, arguments);
 };
+function calculateDiscountedPrice(item) {
+    return item.price * (1 - item.discountPercentage / 100);
+}
+// 테스트 코드
+var discountedProduct6 = {
+    id: 101,
+    name: "Laptop",
+    price: 1000,
+    discountPercentage: 20,
+};
+console.log(calculateDiscountedPrice(discountedProduct6)); // 800
+function printOrderSummary(order) {
+    return "(order: ".concat(order.orderId, ") (Phone: ").concat(order.phone, ")");
+}
+// 테스트 코드
+var orderDetails = {
+    phone: "123-456-7890",
+    address: "123 Main St",
+    orderId: 2023,
+    items: ["Laptop", "Mouse"]
+};
+console.log(printOrderSummary(orderDetails)); // "Order 2023 (Phone: 123-456-7890)"
+// 사용자 데이터를 병합하는 함수
+function mergeUserData(profile, activity) {
+    return __assign(__assign({}, profile), activity);
+}
+// 사용자 요약 정보를 반환하는 함수
+function getUserSummary(user) {
+    return "\uC0AC\uC6A9\uC790 [".concat(user.id, "] - [").concat(user.name, "]([").concat(user.email, "]) - \uB9C8\uC9C0\uB9C9 \uB85C\uADF8\uC778: [").concat(user.lastLogin.toISOString(), "]");
+}
+// 테스트 코드
+var profile = { id: 1, name: "Alice", email: "alice@example.com" };
+var activity = {
+    lastLogin: new Date("2024-01-01T10:00:00Z"),
+    actions: ["login", "viewed dashboard", "logout"],
+};
+var mergedUser = mergeUserData(profile, activity);
+console.log(getUserSummary(mergedUser));
+// 출력 예시: "사용자 1 - Alice (alice@example.com) - 마지막 로그인: 2024-01-01T10:00:00Z"
+// 9-1번 문제
+// 매개변수, 리턴타입 정의필요 
+function processInput(input) {
+    if (Array.isArray(input)) {
+        if (typeof input[0] === "number") {
+            return input.reduce(function (result9, input_num) { return result9 + input_num; }, 0);
+        }
+        else if (typeof input[0] === "string") {
+            return input.join('');
+        }
+        else {
+            throw new Error("에러 발생");
+        }
+    }
+    else if ("message" in input) {
+        return input.message.toUpperCase();
+    }
+    else {
+        throw new Error("에러 발생");
+    }
+}
+// 테스트 코드
+console.log(processInput([1, 2, 3])); // 6
+console.log(processInput(["hello", "world"])); // "helloworld"
+console.log(processInput({ message: "TypeScript" })); // "TYPESCRIPT"
+// console.log(processInput(42)); // 에러 발생
+// 9-2번 문제
+// 클래스 정의
+var Car = /** @class */ (function () {
+    function Car(brand) {
+        this.brand = brand;
+    }
+    return Car;
+}());
+var Bike = /** @class */ (function () {
+    function Bike(type) {
+        this.type = type;
+    }
+    return Bike;
+}());
+function processVehicle(vehicle) {
+    if (vehicle instanceof Car) {
+        return vehicle.brand.toUpperCase();
+    }
+    else if (vehicle instanceof Bike) {
+        return "Bike: ".concat(vehicle.type);
+    }
+    else
+        throw new Error("에러 발생");
+}
+// 테스트 코드
+var myCar = new Car("Tesla");
+var myBike = new Bike("Mountain");
+console.log(processVehicle(myCar)); // "TESLA"
+console.log(processVehicle(myBike)); // "Bike: Mountain"
+function processUser(user) {
+    if ("permissions" in user) {
+        return user.permissions.join(",");
+    }
+    else if ("email" in user) {
+        return user.email;
+    }
+    else {
+        return "에러 입니다.";
+    }
+}
+// 테스트 코드
+console.log(processUser({ type: "admin", permissions: ["read", "write"] })); // "read,write"
+console.log(processUser({ type: "user", email: "user@example.com" })); // "user@example.com"
+// 사용자 정의 타입 가드
+function isRectangle(shape) {
+    return shape.width !== undefined && shape.height !== undefined;
+}
+function calculateArea(shape) {
+    if (isRectangle(shape)) {
+        return shape.width * shape.height;
+    }
+    else {
+        return Math.pow(shape.radius, 2) * Math.PI;
+    }
+}
+// 테스트 코드
+console.log(calculateArea({ width: 10, height: 5 })); // 50
+console.log(calculateArea({ radius: 7 })); // 153.93804002589985 (대략 π * 7²)
+// 넓이를 계산하는 함수
+function calculateArea1(shape) {
+    switch (shape.type) {
+        case ("square"): return Math.pow(shape.side, 2);
+        case ("circle"): return Math.pow(shape.radius, 2) * Math.PI;
+        default:
+            var exhaustive_check = shape;
+            throw new Error("해당 타입이 없습니다.");
+    }
+    // 여기에 구현
+}
+// 테스트 코드
+console.log(calculateArea1({ type: "square", side: 5 })); // 기대 출력: 25
+console.log(calculateArea1({ type: "circle", radius: 7 })); // 기대 출력: 153.93804002589985
+//----------------------------------------------
+//11-1번 문제
+// 매개변수, 리턴타입 정의 필요 
+function getFirstElement(array) {
+    return array[0];
+}
+// 테스트 코드
+console.log(getFirstElement([1, 2, 3])); // 1
+console.log(getFirstElement(["a", "b", "c"])); // "a"
+console.log(getFirstElement([])); // undefined
+//11-2번 문제
+// 매개변수, 리턴타입 정의 필요 
+function isNumberArray(array) {
+    return array.every(function (item) { return typeof item === "number"; });
+}
+// 테스트 코드
+console.log(isNumberArray([1, 2, 3])); // true
+console.log(isNumberArray(["a", "b", "c"])); // false
+console.log(isNumberArray([])); // true (빈 배열은 숫자 배열로 간주)
+// 조건부 타입을 활용한 함수
+function checkArrayType(value) {
+    if (Array.isArray(value)) {
+        return "This is an Array";
+    }
+    else {
+        return "This is not an Array";
+    }
+}
+// 테스트 코드
+console.log(checkArrayType([1, 2, 3])); // "This is an array."
+console.log(checkArrayType("Hello")); // "This is not an array."
+console.log(checkArrayType({ key: "value" })); // "This is not an array."
+// 기대 결과:
+// type WithDefaults = {
+//   id: [number, number];
+//   name: [string, string];
+//   isActive: [boolean, boolean];
+// }
+//11-5번 문제
+function createObject(key, value) {
+    var _a;
+    return _a = {}, _a[key] = value, _a;
+}
+console.log(createObject("id", 123)); // { id: 123 }
+console.log(createObject("name", "Alice")); // { name: "Alice" }
+// 11-6번 문제
+// 매개변수, 리턴 타입 정의 필요 
+function pluck(array, key) {
+    if (array.every(function (item) { return key in item; })) {
+        return array.map(function (item) { return item[key]; });
+    }
+    else
+        return [];
+}
+// 테스트 코드
+var users = [
+    { id: 1, name: "Alice" },
+    { id: 2, name: "Bob" },
+];
+console.log(pluck(users, "id")); // [1, 2]
+console.log(pluck(users, "name")); // ["Alice", "Bob"]
 var user = {
     id: 1,
     name: "Alice",
@@ -165,147 +362,7 @@ console.log(processAny(42)); // 기대 출력: "42"
 console.log(processAny(true)); // 기대 출력: "true"
 console.log(processUnknown("hello")); // 기대 출력: "HELLO"
 console.log(processUnknown(42)); // 기대 출력: 420
-function calculateDiscountedPrice(item) {
-    return item.price * (1 - item.discountPercentage / 100);
-}
-// 테스트 코드
-var discountedProduct6 = {
-    id: 101,
-    name: "Laptop",
-    price: 1000,
-    discountPercentage: 20,
-};
-console.log(calculateDiscountedPrice(discountedProduct6)); // 800
-function printOrderSummary(order) {
-    return "(order: ".concat(order.orderId, ") (Phone: ").concat(order.phone, ")");
-}
-// 테스트 코드
-var orderDetails = {
-    phone: "123-456-7890",
-    address: "123 Main St",
-    orderId: 2023,
-    items: ["Laptop", "Mouse"]
-};
-console.log(printOrderSummary(orderDetails)); // "Order 2023 (Phone: 123-456-7890)"
-// 사용자 데이터를 병합하는 함수
-function mergeUserData(profile, activity) {
-    return __assign(__assign({}, profile), activity);
-}
-// 사용자 요약 정보를 반환하는 함수
-function getUserSummary(user) {
-    return "\uC0AC\uC6A9\uC790 [".concat(user.id, "] - [").concat(user.name, "]([").concat(user.email, "]) - \uB9C8\uC9C0\uB9C9 \uB85C\uADF8\uC778: [").concat(user.lastLogin, "]");
-}
-// 테스트 코드
-var profile = { id: 1, name: "Alice", email: "alice@example.com" };
-var activity = {
-    lastLogin: new Date("2024-01-01T10:00:00Z"),
-    actions: ["login", "viewed dashboard", "logout"],
-};
-var mergedUser = mergeUserData(profile, activity);
-console.log(getUserSummary(mergedUser));
-// 출력 예시: "사용자 1 - Alice (alice@example.com) - 마지막 로그인: 2024-01-01T10:00:00Z"
-// 9-1번 문제
-// 매개변수, 리턴타입 정의필요 
-function processInput(input) {
-    if (Array.isArray(input)) {
-        if (typeof input[0] === "number") {
-            return input.reduce(function (result9, input_num) { return result9 + input_num; }, 0);
-        }
-        else if (typeof input[0] === "string") {
-            return input.join('');
-        }
-        else {
-            throw new Error("에러 발생");
-        }
-    }
-    else if ("message" in input) {
-        return input.message.toUpperCase();
-    }
-    else {
-        throw new Error("에러 발생");
-    }
-}
-// 테스트 코드
-console.log(processInput([1, 2, 3])); // 6
-console.log(processInput(["hello", "world"])); // "helloworld"
-console.log(processInput({ message: "TypeScript" })); // "TYPESCRIPT"
-// console.log(processInput(42)); // 에러 발생
-// 9-2번 문제
-// 클래스 정의
-var Car = /** @class */ (function () {
-    function Car(brand) {
-        this.brand = brand;
-    }
-    return Car;
-}());
-var Bike = /** @class */ (function () {
-    function Bike(type) {
-        this.type = type;
-    }
-    return Bike;
-}());
-function processVehicle(vehicle) {
-    if (vehicle instanceof Car) {
-        return vehicle.brand.toUpperCase();
-    }
-    else if (vehicle instanceof Bike) {
-        return "Bike: ".concat(vehicle.type);
-    }
-    else
-        throw new Error("에러 발생");
-}
-// 테스트 코드
-var myCar = new Car("Tesla");
-var myBike = new Bike("Mountain");
-console.log(processVehicle(myCar)); // "TESLA"
-console.log(processVehicle(myBike)); // "Bike: Mountain"
-function processUser(user) {
-    if ("permissions" in user) {
-        return user.permissions.join(",");
-    }
-    else if ("email" in user) {
-        return user.email;
-    }
-    else {
-        return "undefined";
-    }
-}
-// 테스트 코드
-console.log(processUser({ type: "admin", permissions: ["read", "write"] })); // "read,write"
-console.log(processUser({ type: "user", email: "user@example.com" })); // "user@example.com"
-// 사용자 정의 타입 가드
-function isRectangle(shape) {
-    return shape.width !== undefined && shape.height !== undefined;
-}
-function calculateArea(shape) {
-    if (isRectangle(shape)) {
-        return shape.width * shape.height;
-    }
-    else if (shape) {
-        return Math.pow(shape.radius, 2) * Math.PI;
-    }
-    else {
-        return 0;
-    }
-}
-// 테스트 코드
-console.log(calculateArea({ width: 10, height: 5 })); // 50
-console.log(calculateArea({ radius: 7 })); // 153.93804002589985 (대략 π * 7²)
-// 넓이를 계산하는 함수
-function calculateArea1(shape) {
-    switch (shape.type) {
-        case ("square"): return Math.pow(shape.side, 2);
-        case ("circle"): return Math.pow(shape.radius, 2) * Math.PI;
-        default:
-            var exhaustive_check = shape;
-            throw new Error("해당 타입이 없습니다.");
-    }
-    // 여기에 구현
-}
-// 테스트 코드
-console.log(calculateArea1({ type: "square", side: 5 })); // 기대 출력: 25
-console.log(calculateArea1({ type: "circle", radius: 7 })); // 기대 출력: 153.93804002589985
-//------------------------------------------------------------------------
+// console.log(processUnknown(true)); // 에러 발생
 //------------------------------------------------------
 // 1-1번 문제
 var userName; // 예: 이름
