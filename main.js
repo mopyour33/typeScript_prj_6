@@ -1,3 +1,16 @@
+// 15-2번 문제
+function getValue(obj, key) {
+    return obj[key];
+}
+// 테스트 코드
+const user152 = {
+    id: 1,
+    name: "Alice",
+    email: "alice@example.com",
+};
+console.log(getValue(user152, "name")); // "Alice"
+console.log(getValue(user152, "email")); // "alice@example.com"
+//---------------------------
 // //12-1번 문제
 // type User12 = {
 //   name: string;
