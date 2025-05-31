@@ -100,15 +100,15 @@ type TeamMember = {
 
 
 // 1. `createTeamMember` 함수 작성
-function createTeamMember(data: Partial<TeamMember>): TeamMember {
+function createTeamMember(data: Partial<TeamMember>& Pick<TeamMember,"id">): TeamMember {
   // 여기에 구현
   return {
     "id":data.id,
-    "name":data.name,
-    "email":data.email,
-    "role": data.role || "developer",
+    "name":data.name ?? '',
+    "email":data.email ?? '',
+    "role": data.role ?? "developer",
     "isActive":data.isActive ?? true
-  }
+  };
 }
 
 // 2. `filterTeamMembers` 함수 작성
@@ -144,7 +144,9 @@ const members: TeamMember[] = [
 
 // // 1. 새 팀원 생성
 const newMember = createTeamMember({ id: 4, name: "Diana" });
-console.log(newMember);
+console.log(JSON.stringify(newMember, null, 2));
+console.log('email:', newMember.email);
+// console.log(newMember);
 // 기대 출력: { id: 4, name: "Diana", email: "", role: "developer", isActive: true }
 
 // // 2. 필터링된 팀원 목록
@@ -207,7 +209,7 @@ function calculateAverageScore(scores: Record<string,number>): number {
   return (Object.values(scores)).reduce((sum, score) => sum + score,0)/keyCount;
 }
 
-// 테스트 코드
+//테스트 코드
 console.log(calculateAverageScore(scores)); // 85
 
 
