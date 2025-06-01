@@ -20,14 +20,12 @@ function processRequest(type, data) {
     else if (type === "binary") {
         return "Proceed: ".concat(data.join(","));
     }
-    else
-        return "Error";
+    throw new Error("지원하지 않는 타입입니다.");
     // switch(type){
     //   case ("text") : return `Proceed: ${data}`;
     //   case ("json") : return `Proceed: ${data}`;
     //   case ("binary") : return `Proceed: ${data.join(",")}`;
     // }
-    // 여기에 구현
 }
 // 테스트 코드
 console.log(processRequest("text", "Hello")); // "Processed: Hello"
